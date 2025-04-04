@@ -8,6 +8,8 @@ import EventEmitter from "../../Utils/EventEmmiter.js";
 import cardBackMaterial from './cardBackMaterial.js';
 import cardFrontMaterial from './cardFrontMaterial.js';
 import HoverEffect from "../../Utils/HoverEffect.js";
+import createGlowMaterial from "../../Utils/glowMaterial.js";
+import GlowEffect from "../../Utils/GlowEffect.js";
 
 export class Card extends EventEmitter {
     defaultPosition = {x: 0, y: 0, z: 0}
@@ -101,12 +103,12 @@ export class Card extends EventEmitter {
             this.group.add(this.labelText);
         }
 
-        // this.glowMaterial = createGlowMaterial();
-        // this.glow = new THREE.Mesh(
-        //     new THREE.PlaneGeometry(1.5, 2.4),
-        //     this.glowMaterial
-        // );
-        // this.group.add(this.glow);
+        this.glowMaterial = createGlowMaterial();
+        this.glow = new THREE.Mesh(
+            new THREE.PlaneGeometry(1.5, 2.4),
+            this.glowMaterial
+        );
+        this.group.add(this.glow);
 
         this.camera.instance.add(this.group);
 
@@ -135,11 +137,11 @@ export class Card extends EventEmitter {
             easeIn: "back.out(2)",
             easeOut: "sine.inOut"
         });
-        // this.glowEffect = new GlowEffect(this.glowMaterial, {
-        //     max: 1.0,
-        //     min: 0.0,
-        //     duration: 0.4
-        // });
+        this.glowEffect = new GlowEffect(this.glowMaterial, {
+            max: 1.0,
+            min: 0.0,
+            duration: 0.4
+        });
     }
 
     update() {
@@ -171,12 +173,12 @@ export class Card extends EventEmitter {
 
     setHoverState() {
         this.hoverEffect.hoverOn();
-        // this.glowEffect.fadeIn();
+        this.glowEffect.fadeIn();
     }
 
     setUnHoverState() {
         this.hoverEffect.hoverOff();
-        // this.glowEffect.fadeOut();
+        this.glowEffect.fadeOut();
 
         this.group.scale.set(1, 1, 1);
         this.intersectMesh.scale.set(1, 1, 1);
