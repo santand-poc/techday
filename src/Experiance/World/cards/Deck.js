@@ -43,6 +43,6 @@ function positionCardsInScreenArc(cards, radius = 2.5, yBase = -2.5, arcAngle = 
         const distanceFromCenter = Math.abs(i - mid);
         const y = yBase + distanceFromCenter * -0.1;
         const z = zBase - distanceFromCenter * 0.05;
-        card.setDefaultPosition(x, y, z);
+        card.setDefaults(x, y, z);
     });
 }

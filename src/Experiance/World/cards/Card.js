@@ -3,25 +3,16 @@ import {RoundedBoxGeometry} from "three/addons";
 import * as THREE from "three";
 import PlaneLabel from "../texts/PlaneLabel.js";
 import Mouse from "../../Utils/Mouse.js";
-import {
-    animateCardToSlot,
-    animateTo,
-    spawnBlastEffect,
-    spawnSmokeEffect,
-} from "../../Utils/Events.js";
+import {animateCardToSlot, animateTo, spawnBlastEffect, spawnSmokeEffect,} from "../../Utils/Events.js";
 import EventEmitter from "../../Utils/EventEmmiter.js";
 import cardBackMaterial from './cardBackMaterial.js';
 import cardFrontMaterial from './cardFrontMaterial.js';
 import createGlowMaterial from "../../Utils/glowMaterial.js";
+import HoverEffect from "../../Utils/HoverEffect.js";
+import GlowEffect from "../../Utils/GlowEffect.js";
 
 export class Card extends EventEmitter {
-    defaultPosition = {
-        x: 0,
-        y: 0,
-        z: 0
-    }
-    targetGlowStrength = 0.0; // to co chcesz osiągnąć
-    currentGlowStrength = 0.0; // aktualna wartość
+    defaultPosition = {x: 0, y: 0, z: 0}
     inserted = false;
     centered = false;
 
@@ -31,6 +22,7 @@ export class Card extends EventEmitter {
         this.scene = this.experiance.scene;
         this.resources = this.experiance.resources;
         this.raycaster = this.experiance.raycaster;
+        this.time = this.experiance.time;
         this.camera = this.experiance.camera;
         this.mouse = this.experiance.mouse;
         this.config = config;
@@ -59,7 +51,7 @@ export class Card extends EventEmitter {
             top: new THREE.MeshBasicMaterial({color: '#38200e'}),
             bottom: new THREE.MeshBasicMaterial({color: '#38200e'}),
             front: frontMaterial,
-            back: backMaterial,   // Back
+            back: backMaterial,
             innerTop: topTexture ? new THREE.MeshStandardMaterial({
                 map: this.resources.items[topTexture],
             }) : undefined,
@@ -141,10 +133,25 @@ export class Card extends EventEmitter {
         this.camera.instance.add(this.intersectMesh);
     }
 
-    update() {
-        this.currentGlowStrength += (this.targetGlowStrength - this.currentGlowStrength) * 0.2;
-        this.glow.material.uniforms.glowStrength.value = this.currentGlowStrength;
+    setDefaults(x, y, z) {
+        this.defaultPosition.x = x ?? 0;
+        this.defaultPosition.y = y ?? 0;
+        this.defaultPosition.z = z ?? 0;
+        this.resetPosition(this.defaultPosition);
+        this.hoverEffect = new HoverEffect([this.group, this.intersectMesh], {
+            hoverY: 1,
+            duration: 0.4,
+            easeIn: "back.out(2)",
+            easeOut: "sine.inOut"
+        });
+        this.glowEffect = new GlowEffect(this.glowMaterial, {
+            max: 1.0,
+            min: 0.0,
+            duration: 0.4
+        });
+    }
 
+    update() {
         if (this.inserted) {
             return;
         }
@@ -159,54 +166,31 @@ export class Card extends EventEmitter {
         }
     }
 
-    isHovered() {
-        return this.raycaster?.intersections?.[0]?.object.uuid === this.intersectMesh.uuid;
-    }
-
-    setHoverState() {
-        if (this.group.position.y < this.defaultPosition.y + 1) {
-            this.group.position.y += 0.1;
-            this.intersectMesh.position.y += 0.1;
-        }
-        this.targetGlowStrength = 1.0;
-    }
-
-    setUnHoverState() {
-        this.setGroupPosition(this.defaultPosition.x, this.defaultPosition.y, this.defaultPosition.z);
-        this.setIntersectMeshPosition(this.defaultPosition.x, this.defaultPosition.y, this.defaultPosition.z);
-        this.group.scale.set(1, 1, 1);
-        this.intersectMesh.scale.set(1, 1, 1);
-        this.group.rotation.set(0, Math.PI, 0);
-        this.intersectMesh.rotation.set(0, 0, 0);
-        this.targetGlowStrength = 0.0;
-    }
-
-    setDefaultPosition(x, y, z) {
-        this.defaultPosition.x = x ?? 0;
-        this.defaultPosition.y = y ?? 0;
-        this.defaultPosition.z = z ?? 0;
-        this.setGroupPosition(this.defaultPosition.x, this.defaultPosition.y, this.defaultPosition.z);
-        this.setIntersectMeshPosition(this.defaultPosition.x, this.defaultPosition.y, this.defaultPosition.z);
-    }
-
-    setGroupPosition(x, y, z) {
-        this.group.position.x = x;
-        this.group.position.y = y;
-        this.group.position.z = z;
-    }
-
-    setIntersectMeshPosition(x, y, z) {
-        this.intersectMesh.position.x = x;
-        this.intersectMesh.position.y = y;
-        this.intersectMesh.position.z = z;
-    }
-
     watchClicked() {
         this.mouse.on(Mouse.LEFT_ClICK_EVENT, () => {
             if (this.isHovered()) {
                 this.onClicked();
             }
         })
+    }
+
+    isHovered() {
+        return this.raycaster?.intersections?.[0]?.object.uuid === this.intersectMesh.uuid;
+    }
+
+    setHoverState() {
+        this.hoverEffect.hoverOn();
+        this.glowEffect.fadeIn();
+    }
+
+    setUnHoverState() {
+        this.hoverEffect.hoverOff();
+        this.glowEffect.fadeOut();
+
+        this.group.scale.set(1, 1, 1);
+        this.intersectMesh.scale.set(1, 1, 1);
+        this.group.rotation.set(0, Math.PI, 0);
+        this.intersectMesh.rotation.set(0, 0, 0);
     }
 
     onClicked() {
@@ -218,10 +202,8 @@ export class Card extends EventEmitter {
             this.sendToRing();
             return;
         }
-        this.setUnHoverState();
-        this.centered = false;
-        this.inserted = false;
 
+        this.reset();
     }
 
     sendToFront() {
@@ -237,12 +219,23 @@ export class Card extends EventEmitter {
         animateCardToSlot(this.group, respectiveSlot, 1, () => {
             spawnSmokeEffect(this.mesh);
             spawnBlastEffect(this.mesh);
-            this.targetGlowStrength = 2;
             this.trigger('hit');
             this.inserted = true;
             this.camera.shake(0.05);
         });
         animateCardToSlot(this.intersectMesh, respectiveSlot, 1);
+    }
+
+    reset() {
+        this.resetPosition(this.defaultPosition);
+        this.setUnHoverState();
+        this.centered = false;
+        this.inserted = false;
+    }
+
+    resetPosition({x, y, z}) {
+        this.group.position.set(x, y, z);
+        this.intersectMesh.position.set(x, y, z);
     }
 
     getRespectiveSlot() {
