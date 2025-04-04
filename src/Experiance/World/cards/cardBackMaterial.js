@@ -16,7 +16,8 @@ export default function getCardBackMaterial() {
         transparent: true,
         roughness: 0.1,
         side: THREE.DoubleSide,
-        normalScale: new THREE.Vector2(2, 2)
+        normalScale: new THREE.Vector2(2, 2),
+        envMapIntensity: 0,
     });
 
     return instance;
