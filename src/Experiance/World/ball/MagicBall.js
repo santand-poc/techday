@@ -39,8 +39,6 @@ export default class MagicBall {
         this.mesh.position.set(0, 0, -65);
         this.scene.add(this.mesh);
 
-        this.mesh.castShadow = true;
-        this.mesh.receiveShadow = true;
         this.createFlares();
     }
 

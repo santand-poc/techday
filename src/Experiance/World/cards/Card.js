@@ -74,9 +74,6 @@ export class Card extends EventEmitter {
             this.materials.front,
             this.materials.back,
         ]);
-        this.mesh.castShadow = true;
-        this.mesh.castShadow = true;
-        this.mesh.receiveShadow = true;
         this.mesh.name = "CardBase"
         this.group.add(this.mesh);
 
@@ -85,8 +82,6 @@ export class Card extends EventEmitter {
                 this.topPlaneGrometry,
                 this.materials.innerTop
             );
-            this.topPlane.castShadow = true;
-            this.topPlane.castShadow = true;
             this.topPlane.position.y = topGeometryFull ? 0 : 0.35;
             this.topPlane.position.z = -0.02;
             this.group.add(this.topPlane);
@@ -97,8 +92,6 @@ export class Card extends EventEmitter {
                 this.bottomPlaneGrometry,
                 this.materials.innerBottom
             );
-            this.bottomPlane.castShadow = true;
-            this.bottomPlane.castShadow = true;
             this.bottomPlane.position.y = -0.6;
             this.group.add(this.bottomPlane);
         }
