@@ -24,22 +24,46 @@ export default class Camera {
 
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.webglCanvas);
-
+        this.controls.enableRotate = false;
         this.controls.enablePan = false;
     }
 
     resize() {
-        this.instance.updateProjectionMatrix();
+        this.instance?.updateProjectionMatrix();
     }
 
 
     update() {
-        this.instance.updateProjectionMatrix();
-        this.updatePosition();
+        this.instance?.updateProjectionMatrix();
         this.controls?.update();
     }
 
-    updatePosition() {
 
+    shake(intensity = 0.1, duration = 0.3) {
+        const initialPos = this.instance.position.clone();
+        const times = 10;
+        let i = 0;
+
+        function doShake(camera) {
+            if (i < times) {
+                const offsetX = (Math.random() - 0.5) * intensity;
+                const offsetY = (Math.random() - 0.5) * intensity;
+                const offsetZ = (Math.random() - 0.5) * intensity * 0.2;
+
+                camera.instance.position.set(
+                    initialPos.x + offsetX,
+                    initialPos.y + offsetY,
+                    initialPos.z + offsetZ
+                );
+
+                i++;
+                setTimeout(() => doShake(camera), duration * 1000 / times);
+            } else {
+                camera.instance.position.copy(initialPos);
+            }
+        }
+
+        doShake(this);
     }
+
 }

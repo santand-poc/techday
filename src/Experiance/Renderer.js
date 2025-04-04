@@ -30,6 +30,8 @@ export default class Renderer {
         this.instance.outputColorSpace = THREE.SRGBColorSpace
         this.instance.shadowMap.enabled = true
         this.instance.shadowMap.type = THREE.PCFSoftShadowMap
+        this.instance.sortObjects = false;
+
     }
 
     update() {

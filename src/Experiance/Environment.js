@@ -20,13 +20,13 @@ export default class Environment {
 
         this.environmentMap.texture.colorSpace = THREE.SRGBColorSpace;
         this.scene.environment = this.environmentMap.texture;
-        this.scene.background = this.environmentMap.texture;
+        this.scene.background = this.resources.items.sceneBackground;
 
         this.environmentMap.updateMaterial = () => {
             this.scene.traverse((child) => {
                 if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
-                    child.material.envMap = child.material.envMap ? child.material.envMap : this.environmentMap.texture;
-                    child.material.envMapIntensity = child.material.envMapIntensity ? child.material.envMapIntensity : this.environmentMap.intensity;
+                    child.material.envMap = child.material.envMap  !== undefined ? child.material.envMap : this.environmentMap.texture;
+                    child.material.envMapIntensity = child.material.envMapIntensity !== undefined ? child.material.envMapIntensity : this.environmentMap.intensity;
                     child.material.needsUpdate = true;
                 }
             });

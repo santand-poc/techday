@@ -125,11 +125,46 @@ export default [
         type: 'texture',
         path: 'textures/full/full_card_header_vertical_alpha.png'
     },
+    {
+        name: 'glowTexture',
+        type: 'texture',
+        path: 'textures/glow/glow_texture.png'
+    },
     // SCROLLS
     {
         name: 'scroll',
         type: 'texture',
         path: 'textures/scroll-background_texture.png'
+    },
+    {
+        name: 'starTexture',
+        type: 'texture',
+        path: 'textures/scroll/scroll_particles_texture.png'
+    },
+    {
+        name: 'rune1',
+        type: 'texture',
+        path: 'textures/scroll/scroll_particles_rune1.png'
+    },
+    {
+        name: 'rune2',
+        type: 'texture',
+        path: 'textures/scroll/scroll_particles_rune2.png'
+    },
+    {
+        name: 'rune3',
+        type: 'texture',
+        path: 'textures/scroll/scroll_particles_rune3.png'
+    },
+    {
+        name: 'rune4',
+        type: 'texture',
+        path: 'textures/scroll/scroll_particles_rune4.png'
+    },
+    {
+        name: 'rune5',
+        type: 'texture',
+        path: 'textures/scroll/scroll_particles_rune5.png'
     },
     // TEXTS
     {
@@ -141,6 +176,67 @@ export default [
         name: 'magicGlowTexture',
         type: 'texture',
         path: 'textures/ball/gold_glow_outward.png'
+    },
+    // TEXTS
+    {
+        name: 'ringTexture',
+        type: 'texture',
+        path: 'textures/ring/ring_texture.png'
+    },
+    {
+        name: 'ringTextureNormal',
+        type: 'texture',
+        path: 'textures/ring/ring_texture.png'
+    },
+    {
+        name: 'ringTextureRoughness',
+        type: 'texture',
+        path: 'textures/ring/ring_texture_roughness.png'
+    }, {
+        name: 'ringTextureRoughness',
+        type: 'texture',
+        path: 'textures/ring/ring_texture_roughness.png'
+    },
+    {
+        name: 'ringTextureAlpha',
+        type: 'texture',
+        path: 'textures/ring/ring_texture_inner_alpha.png'
+    },
+    {
+        name: 'ringSecondTextureAlpha',
+        type: 'texture',
+        path: 'textures/ring/ring_texture_second_inner.png'
+    },
+    {
+        name: 'ringSlot',
+        type: 'texture',
+        path: 'textures/ring/ring_slot_texture.png'
+    },
+
+    {
+        name: 'smokeTexture',
+        type: 'texture',
+        path: 'textures/ring/smoke_texture.png'
+    },
+    {
+        name: 'blastTexture',
+        type: 'texture',
+        path: 'textures/ring/blast_texture.png'
+    },
+    // SCROLL
+    {
+        name: 'simpleScroll',
+        type: 'gltfModel',
+        path: 'models/scroll/simple/scene.gltf'
+    },
+    {
+        name: 'explodeScrollContent',
+        type: 'texture',
+        // path: 'models/scroll/simple/textures/explode_content_texture.png',
+        // path: 'models/scroll/simple/textures/brms_content_texture.png',
+        // path: 'models/scroll/simple/textures/drools_explanation.png',
+        // path: 'models/scroll/simple/textures/drools_tables.png',
+        path: 'models/scroll/simple/textures/params_clp.png',
     },
     // SCENE
     {

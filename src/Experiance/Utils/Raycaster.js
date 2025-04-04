@@ -9,14 +9,17 @@ export default class Raycaster extends EventEmitter {
         this.camera = this.experience.camera;
         this.mouse = this.experience.mouse;
         this.instance = new THREE.Raycaster();
-        this.intersecttions = [];
+        this.intersections = [];
     }
 
     update() {
         this.instance.setFromCamera(this.mouse?.instance, this.camera.instance)
         const objects = [];
-        this.experience.world?.cards?.forEach(card => objects.push(card.intesectMesh));
-        this.intersecttions = this.instance.intersectObjects(objects);
+        this.experience.world?.deck?.cards?.forEach(card => objects.push(card.intersectMesh));
+        if (this.experience.world?.scroll?.mesh) {
+            objects.push(this.experience.world.scroll.mesh);
+        }
+        this.intersections = this.instance.intersectObjects(objects);
     }
 
 }

@@ -2,23 +2,42 @@ import Experience from "../../Experiance.js";
 import {RoundedBoxGeometry} from "three/addons";
 import * as THREE from "three";
 import PlaneLabel from "../texts/PlaneLabel.js";
+import Mouse from "../../Utils/Mouse.js";
+import {
+    animateCardToSlot,
+    animateTo,
+    spawnBlastEffect,
+    spawnSmokeEffect,
+} from "../../Utils/Events.js";
+import EventEmitter from "../../Utils/EventEmmiter.js";
+import cardBackMaterial from './cardBackMaterial.js';
+import cardFrontMaterial from './cardFrontMaterial.js';
+import createGlowMaterial from "../../Utils/glowMaterial.js";
 
-export class Card {
+export class Card extends EventEmitter {
     defaultPosition = {
         x: 0,
         y: 0,
         z: 0
     }
+    targetGlowStrength = 0.0; // to co chcesz osiągnąć
+    currentGlowStrength = 0.0; // aktualna wartość
+    inserted = false;
+    centered = false;
 
     constructor(config) {
+        super();
         this.experiance = Experience.INSTANCE;
         this.scene = this.experiance.scene;
         this.resources = this.experiance.resources;
         this.raycaster = this.experiance.raycaster;
+        this.camera = this.experiance.camera;
+        this.mouse = this.experiance.mouse;
         this.config = config;
         this.setGeometry();
         this.setMaterial();
         this.setMesh();
+        this.watchClicked();
     }
 
     setGeometry() {
@@ -29,35 +48,18 @@ export class Card {
     }
 
     setMaterial() {
-        const coverTextureResult = this.config.coverTexture ?? 'cardFront';
         const topTexture = this.config.topTexture;
         const bottomTexture = this.config.bottomTexture;
+        const backMaterial = cardBackMaterial();
+        const frontMaterial = cardFrontMaterial(this.config.coverTexture);
+
         this.materials = {
-            right: new THREE.MeshStandardMaterial({color: '#38200e', metalness: 1}),
-            left: new THREE.MeshStandardMaterial({color: '#38200e', metalness: 1}),
-            top: new THREE.MeshStandardMaterial({color: '#38200e', metalness: 1}),
-            bottom: new THREE.MeshStandardMaterial({color: '#38200e', metalness: 1}),
-            front: new THREE.MeshStandardMaterial({
-                map: this.resources.items[coverTextureResult],
-                normalMap: this.resources.items.cardFrontNormal,
-                roughnessMap: this.resources.items.cardFrontRoughness,
-                metalnessMap: this.resources.items.cardFrontMetalness,
-                alphaMap: this.resources.items[coverTextureResult + 'Alpha'],
-                transparent: true,
-                side: THREE.FrontSide,
-                roughness: 0.2,
-                normalScale: new THREE.Vector2(2, 2)
-            }),
-            back: new THREE.MeshStandardMaterial({
-                map: this.resources.items.cardBack,
-                normalMap: this.resources.items.cardBackNormal,
-                roughnessMap: this.resources.items.cardBackRoughness,
-                metalnessMap: this.resources.items.cardBackMetalness,
-                transparent: true,
-                roughness: 0.1,
-                side: THREE.FrontSide,
-                normalScale: new THREE.Vector2(2, 2)
-            }),   // Back
+            right: new THREE.MeshBasicMaterial({color: '#38200e'}),
+            left: new THREE.MeshBasicMaterial({color: '#38200e'}),
+            top: new THREE.MeshBasicMaterial({color: '#38200e'}),
+            bottom: new THREE.MeshBasicMaterial({color: '#38200e'}),
+            front: frontMaterial,
+            back: backMaterial,   // Back
             innerTop: topTexture ? new THREE.MeshStandardMaterial({
                 map: this.resources.items[topTexture],
             }) : undefined,
@@ -83,6 +85,7 @@ export class Card {
         this.mesh.castShadow = true;
         this.mesh.castShadow = true;
         this.mesh.receiveShadow = true;
+        this.mesh.name = "CardBase"
         this.group.add(this.mesh);
 
         if (this.materials.innerTop) {
@@ -109,18 +112,22 @@ export class Card {
         }
 
         if (labelTexture) {
-            // this.labelText = new LabelText({ text: labelText }).mesh;
-            this.labelText = new PlaneLabel({ texture: labelTexture }).mesh;
+            this.labelText = new PlaneLabel({texture: labelTexture}).mesh;
             this.labelText.position.z = 0.026;
             this.labelText.position.y = -0.26;
             this.group.add(this.labelText);
         }
 
-        this.scene.add(this.group);
-        this.geometry = new RoundedBoxGeometry(1.08, 1.92, 0.04, 100, 0.1);
+        this.glowMaterial = createGlowMaterial();
+        this.glow = new THREE.Mesh(
+            new THREE.PlaneGeometry(1.5, 2.4),
+            this.glowMaterial
+        );
+        this.group.add(this.glow);
 
+        this.camera.instance.add(this.group);
 
-        this.intesectMesh = new THREE.Mesh(
+        this.intersectMesh = new THREE.Mesh(
             new THREE.PlaneGeometry(1.08, 1.92),
             new THREE.MeshBasicMaterial({
                 color: 'green',
@@ -130,60 +137,121 @@ export class Card {
                 side: THREE.DoubleSide
             })
         );
-        this.group.rotation.y = Math.PI;
-        this.scene.add(this.intesectMesh);
-        this.scene.add(this.group);
+
+        this.camera.instance.add(this.intersectMesh);
     }
 
     update() {
-        const horizontalScale = this.config.horizontalScale;
-        if (this.isHovered()) {
-            this.group.scale.set(3.5, 3.5, 3.5);
-            this.group.position.x = 0;
-            this.group.position.y = 0;
-            this.group.position.z = 1;
-            if (this.group.rotation.y < (Math.PI * 2)) {
-                this.group.rotation.y += 0.07;
-            }
-            if (horizontalScale) {
-                this.group.rotation.z = -Math.PI / 2;
-            }
-        } else {
-            this.group.scale.set(1, 1, 1);
-            this.group.position.x = this.defaultPosition.x;
-            this.group.position.y = this.defaultPosition.y;
-            this.group.position.z = this.defaultPosition.z;
-            // if (this.group.rotation.y > Math.PI) {
-            //     this.group.rotation.y -= 0.07;
-            // }
-            this.group.rotation.y = Math.PI;
-            this.group.rotation.z = 0;
+        this.currentGlowStrength += (this.targetGlowStrength - this.currentGlowStrength) * 0.2;
+        this.glow.material.uniforms.glowStrength.value = this.currentGlowStrength;
+
+        if (this.inserted) {
+            return;
+        }
+        if (this.centered) {
+            return;
         }
 
-
+        if (this.isHovered()) {
+            this.setHoverState();
+        } else {
+            this.setUnHoverState();
+        }
     }
 
     isHovered() {
-        return this.raycaster?.intersecttions?.some(intersection => {
-            return intersection.object.uuid === this.intesectMesh.uuid;
-        });
+        return this.raycaster?.intersections?.[0]?.object.uuid === this.intersectMesh.uuid;
+    }
+
+    setHoverState() {
+        if (this.group.position.y < this.defaultPosition.y + 1) {
+            this.group.position.y += 0.1;
+            this.intersectMesh.position.y += 0.1;
+        }
+        this.targetGlowStrength = 1.0;
+    }
+
+    setUnHoverState() {
+        this.setGroupPosition(this.defaultPosition.x, this.defaultPosition.y, this.defaultPosition.z);
+        this.setIntersectMeshPosition(this.defaultPosition.x, this.defaultPosition.y, this.defaultPosition.z);
+        this.group.scale.set(1, 1, 1);
+        this.intersectMesh.scale.set(1, 1, 1);
+        this.group.rotation.set(0, Math.PI, 0);
+        this.intersectMesh.rotation.set(0, 0, 0);
+        this.targetGlowStrength = 0.0;
     }
 
     setDefaultPosition(x, y, z) {
-        if (x !== undefined) {
-            this.group.position.x = x;
-            this.intesectMesh.position.x = x;
-            this.defaultPosition.x = x;
+        this.defaultPosition.x = x ?? 0;
+        this.defaultPosition.y = y ?? 0;
+        this.defaultPosition.z = z ?? 0;
+        this.setGroupPosition(this.defaultPosition.x, this.defaultPosition.y, this.defaultPosition.z);
+        this.setIntersectMeshPosition(this.defaultPosition.x, this.defaultPosition.y, this.defaultPosition.z);
+    }
+
+    setGroupPosition(x, y, z) {
+        this.group.position.x = x;
+        this.group.position.y = y;
+        this.group.position.z = z;
+    }
+
+    setIntersectMeshPosition(x, y, z) {
+        this.intersectMesh.position.x = x;
+        this.intersectMesh.position.y = y;
+        this.intersectMesh.position.z = z;
+    }
+
+    watchClicked() {
+        this.mouse.on(Mouse.LEFT_ClICK_EVENT, () => {
+            if (this.isHovered()) {
+                this.onClicked();
+            }
+        })
+    }
+
+    onClicked() {
+        if (this.centered !== true) {
+            this.sendToFront();
+            return;
         }
-        if (y !== undefined) {
-            this.group.position.y = y;
-            this.intesectMesh.position.y = y;
-            this.defaultPosition.y = y;
+        if (this.inserted !== true) {
+            this.sendToRing();
+            return;
         }
-        if (z !== undefined) {
-            this.group.position.z = z;
-            this.intesectMesh.position.z = 1;
-            this.defaultPosition.z = z;
-        }
+        this.setUnHoverState();
+        this.centered = false;
+        this.inserted = false;
+
+    }
+
+    sendToFront() {
+        this.centered = true;
+        animateTo(this.group, {x: 0, y: 1.4, z: -10}, 9, 1, () => {
+            this.camera.shake();
+        });
+        animateTo(this.intersectMesh, {x: 0, y: 1.4, z: -10}, 9);
+    }
+
+    sendToRing() {
+        const respectiveSlot = this.getRespectiveSlot();
+        animateCardToSlot(this.group, respectiveSlot, 1, () => {
+            spawnSmokeEffect(this.mesh);
+            spawnBlastEffect(this.mesh);
+            this.targetGlowStrength = 2;
+            this.trigger('hit');
+            this.inserted = true;
+            this.camera.shake(0.05);
+        });
+        animateCardToSlot(this.intersectMesh, respectiveSlot, 1);
+    }
+
+    getRespectiveSlot() {
+        let slot = null
+        this.scene.traverse((child) => {
+            if (child.userData.name === 'SLOT' && child.userData.index === this.config.index) {
+                slot = child;
+            }
+        });
+        return slot;
     }
 }
