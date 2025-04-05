@@ -43,4 +43,12 @@ export default class GlowEffect {
     set(value) {
         this.uniform.value = value;
     }
+
+    fadeTo(targetValue = 1.0) {
+        gsap.to(this.material.uniforms.glowStrength, {
+            value: targetValue,
+            duration: this.duration,
+            ease: 'power2.out'
+        });
+    }
 }

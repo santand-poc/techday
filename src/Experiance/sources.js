@@ -166,6 +166,11 @@ export default [
         type: 'texture',
         path: 'textures/scroll/scroll_particles_rune5.png'
     },
+    {
+        name: 'noiseTexture',
+        type: 'texture',
+        path: 'textures/scroll/noiseTexture.png'
+    },
     // TEXTS
     {
         name: 'brmsWorldText',

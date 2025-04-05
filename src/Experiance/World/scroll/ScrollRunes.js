@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export default class ScrollParticles {
+export default class ScrollRunes {
     constructor(scroll) {
         this.scroll = scroll;
         this.scene = scroll.scene;
@@ -17,7 +17,7 @@ export default class ScrollParticles {
             this.resources.items.rune5
         ];
 
-        this.particles = [];
+        this.items = [];
 
         this.createParticles();
     }
@@ -43,9 +43,8 @@ export default class ScrollParticles {
             const scale = 0.1 + Math.random() * 0.05;
             sprite.scale.setScalar(scale);
 
-            this.scroll.group.add(sprite);
 
-            this.particles.push({
+            this.items.push({
                 sprite,
                 angle,
                 radius,
@@ -54,6 +53,9 @@ export default class ScrollParticles {
                 rotationSpeed: 0.000005 + Math.random() * 0.000001
             });
         }
+        this.group = new THREE.Group();
+        this.items.forEach(({sprite}) => this.group.add(sprite));
+        this.scroll.group.add(this.group);
     }
 
     getRandomRune() {
@@ -65,7 +67,7 @@ export default class ScrollParticles {
         const t = this.time.elapsed;
         const delta = this.time.delta;
 
-        for (const p of this.particles) {
+        for (const p of this.items) {
             // 🔁 obrót w XY
             p.angle += p.rotationSpeed * delta;
 

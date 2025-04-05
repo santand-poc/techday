@@ -5,7 +5,6 @@ import {EffectComposer, OutputPass, RenderPass, UnrealBloomPass} from "three/add
 export default class Renderer {
 
     constructor() {
-        this.bloom = new Bloom();
         this.experiance = Experience.INSTANCE;
         this.cssCanvas = this.experiance.cssCanvas
         this.webglCanvas = this.experiance.webglCanvas
@@ -30,7 +29,6 @@ export default class Renderer {
         this.instance.outputColorSpace = THREE.SRGBColorSpace
         this.instance.shadowMap.enabled = true
         this.instance.shadowMap.type = THREE.PCFSoftShadowMap
-        this.instance.sortObjects = false;
 
     }
 
@@ -44,28 +42,4 @@ export default class Renderer {
         this.instance.setPixelRatio(this.sizes.pixelRatio)
     }
 
-}
-
-class Bloom {
-    constructor() {
-        this.BLOOM_SCENE = 1;
-        this.layer = new THREE.Layers();
-        this.layer.set(this.BLOOM_SCENE);
-        this.darkMaterial = new THREE.MeshBasicMaterial({color: 'black'})
-        this.matertials = {}
-    }
-
-    nonBloomed(obj) {
-        if (!obj.clp_bloomed) {
-            this.matertials[obj.uuid] = obj.material;
-            obj.material = this.darkMaterial;
-        }
-    }
-
-    restoreMaterial(obj) {
-        if (this.matertials[obj.uuid]) {
-            obj.material = this.matertials[obj.uuid];
-            delete this.matertials[obj.uuid]
-        }
-    }
 }
