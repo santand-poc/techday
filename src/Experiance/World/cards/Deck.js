@@ -7,11 +7,11 @@ export class Deck {
         // @formatter:off
 
         this.cards = [
-            new Card({index: 0, topTexture: 'beginning', bottomTexture: 'scroll', labelTexture: 'brmsWorldText', scrollContent: ''}),
-            new Card({index: 1, topTexture: 'droolsIntro', bottomTexture: 'scroll', labelTexture: 'droolsIntroText'}),
-            new Card({index: 2, topTexture: 'decisionTable', bottomTexture: 'scroll', labelTexture: 'droolsXlsText'}),
-            new Card({index: 3, topTexture: 'cardTeamTop', bottomTexture: 'scroll', labelTexture: 'paramsAtTcfText'}),
-            new Card({index: 4, topTexture: 'trollsTeamTop', bottomTexture: 'scroll'}),
+            new Card({index: 0, topTexture: 'beginning', bottomTexture: 'scroll', labelTexture: 'brmsWorldText', scrollContent: 'brmsScrollContent'}),
+            new Card({index: 1, topTexture: 'droolsIntro', bottomTexture: 'scroll', labelTexture: 'droolsIntroText', scrollContent: 'droolsExplanationScrollContent'}),
+            new Card({index: 2, topTexture: 'decisionTable', bottomTexture: 'scroll', labelTexture: 'droolsXlsText', scrollContent: 'droolsXlsScrollContent'}),
+            new Card({index: 3, topTexture: 'cardTeamTop', bottomTexture: 'scroll', labelTexture: 'paramsAtTcfText', scrollContent: 'paramsInClpScrollContent'}),
+            new Card({index: 4, topTexture: 'trollsTeamTop', bottomTexture: 'scroll', scrollContent: 'explodeScrollContent'}),
             new Card({index: 5, topTexture: 'teamPanicTop', bottomTexture: 'scroll'}),
             new Card({index: 6, topTexture: 'refinementTop', bottomTexture: 'scroll'}),
             new Card({index: 7, topTexture: 'lambdaResque', bottomTexture: 'scroll'}),

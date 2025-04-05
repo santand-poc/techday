@@ -47,7 +47,7 @@ const Easings = {
 
     easeOutWhiplash: t => {
         // lekkie przesunięcie poza 1
-        const overshoot = 1.3;
+        const overshoot = 1.2;
 
         // pierwsza część: zwykły easeOut
         if (t < 0.8) {

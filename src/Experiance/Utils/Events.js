@@ -12,7 +12,7 @@ export function animateCardToSlot(card, slot, duration = 1, onComplete = () => {
 
     const endPos = new THREE.Vector3();
     slot.getWorldPosition(endPos);
-    endPos.z += 0.6;
+    endPos.z += 1;
     card.parent.worldToLocal(endPos);
 
     const endQuat = new THREE.Quaternion();

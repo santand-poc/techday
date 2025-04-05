@@ -28,20 +28,20 @@ export class Scroll {
     }
 
     setMaterial() {
-        this.meshMaterial = new THREE.MeshStandardMaterial({
-            map: this.resources.items.scrollTexture
-        });
         this.contentMaterial = new THREE.MeshBasicMaterial({
-            map: this.resources.items.explodeScrollContent,
-            wireframe: true,
-            color: 'green'
+            map: this.resources.items.explodeScrollContent
         });
         this.glowMaterial = createGlowMaterial();
     }
 
     setMesh() {
+        const meshMaterial = new THREE.MeshStandardMaterial({
+            map: this.resources.items.scrollTexture,
+            needsUpdate: true
+        });
+        meshMaterial.needsUpdate = true;
         this.meshGeometry = new THREE.PlaneGeometry(4, 2.2);
-        this.mesh = new THREE.Mesh(this.meshGeometry, this.meshMaterial)
+        this.mesh = new THREE.Mesh(this.meshGeometry, meshMaterial)
         this.mesh.position.z = -0.2;
         this.mesh.position.y = 0.2;
         this.group.add(this.mesh);
@@ -70,9 +70,13 @@ export class Scroll {
         this.group.visible = false;
         this.scene.add(this.group);
 
+        const noiseMap = this.resources.items.noiseTexture;
+        noiseMap.wrapS = THREE.RepeatWrapping;
+        noiseMap.wrapT = THREE.RepeatWrapping;
+
         this.dissolveEffect = new DissolveEffect(
             [this.mesh, this.contentMesh],
-            this.resources.items.noiseTexture
+            noiseMap
         );
     }
 
@@ -116,7 +120,7 @@ export class Scroll {
     }
 
     show(cardConfig) {
-        console.log(cardConfig);
+        this.resetContent(cardConfig);
         this.group.visible = true;
         this.dissolveEffect?.create(3);
         this.glowEffect?.fadeIn(3);
@@ -124,5 +128,14 @@ export class Scroll {
         gsap.to(this.group.scale, {...this.fullScale, duration: 2, ease: 'back.out(2.5)'});
         this.runes.materials
             .forEach(material => gsap.to(material, {opacity: 0.8, duration: 2, ease: 'power3.inOut'}));
+    }
+
+    resetContent(cardConfig) {
+        if (this.contentMesh.material.uniforms?.originalMap) {
+            this.contentMesh.material.uniforms.originalMap.value = this.resources.items[cardConfig.scrollContent];
+        } else {
+            this.contentMesh.material.map = this.resources.items[cardConfig.scrollContent];
+            this.contentMesh.material.needsUpdate = true;
+        }
     }
 }

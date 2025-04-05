@@ -47,52 +47,52 @@ export default [
     {
         name: 'cardTeamTop',
         type: 'texture',
-        path: 'textures/cards/team_top.png'
+        path: 'textures/cards/tops/team_top.png'
     },
     {
         name: 'trollsTeamTop',
         type: 'texture',
-        path: 'textures/cards/trolls_top.png'
+        path: 'textures/cards/tops/trolls_top.png'
     },
     {
         name: 'refinementTop',
         type: 'texture',
-        path: 'textures/cards/refinement_top.png'
+        path: 'textures/cards/tops/refinement_top.png'
     },
     {
         name: 'teamPanicTop',
         type: 'texture',
-        path: 'textures/cards/team_panic.png'
+        path: 'textures/cards/tops/team_panic.png'
     },
     {
         name: 'lambdaResque',
         type: 'texture',
-        path: 'textures/cards/lambda_resque.png'
+        path: 'textures/cards/tops/lambda_resque.png'
     },
     {
         name: 'finalTable',
         type: 'texture',
-        path: 'textures/cards/final_table.png'
+        path: 'textures/cards/tops/final_table.png'
     },
     {
         name: 'payment',
         type: 'texture',
-        path: 'textures/cards/payment.png'
+        path: 'textures/cards/tops/payment.png'
     },
     {
         name: 'beginning',
         type: 'texture',
-        path: 'textures/cards/beginning.png'
+        path: 'textures/cards/tops/beginning.png'
     },
     {
         name: 'droolsIntro',
         type: 'texture',
-        path: 'textures/cards/drools_intro.png'
+        path: 'textures/cards/tops/drools_intro.png'
     },
     {
         name: 'decisionTable',
         type: 'texture',
-        path: 'textures/cards/decision_table.png'
+        path: 'textures/cards/tops/decision_table.png'
     },
     // FULL CARD
     {
@@ -175,22 +175,22 @@ export default [
     {
         name: 'brmsWorldText',
         type: 'texture',
-        path: 'textures/texts/brms-world_texture_gold.png'
+        path: 'textures/cards/texts/brms-world_texture_gold.png'
     },
     {
         name: 'droolsIntroText',
         type: 'texture',
-        path: 'textures/texts/drools_intro.png'
+        path: 'textures/cards/texts/drools_intro.png'
     },
     {
         name: 'droolsXlsText',
         type: 'texture',
-        path: 'textures/texts/drools_xls.png'
+        path: 'textures/cards/texts/drools_xls.png'
     },
     {
         name: 'paramsAtTcfText',
         type: 'texture',
-        path: 'textures/texts/params_at_tcf.png'
+        path: 'textures/cards/texts/params_at_tcf.png'
     },
     {
         name: 'magicGlowTexture',
@@ -252,16 +252,32 @@ export default [
     {
         name: 'scrollTexture',
         type: 'texture',
-        path: 'textures/scroll_transparent_old.png'
+        path: 'textures/scroll/scroll_transparent_3.png'
+    },
+    {
+        name: 'brmsScrollContent',
+        type: 'texture',
+        path: 'textures/scroll/contents/brms_content_texture.png',
+    },
+    {
+        name: 'droolsXlsScrollContent',
+        type: 'texture',
+        path: 'textures/scroll/contents/drools_tables.png',
+    },
+    {
+        name: 'droolsExplanationScrollContent',
+        type: 'texture',
+        path: 'textures/scroll/contents/drools_explanation_2.png',
+    },
+    {
+        name: 'paramsInClpScrollContent',
+        type: 'texture',
+        path: 'textures/scroll/contents/params_clp.png',
     },
     {
         name: 'explodeScrollContent',
         type: 'texture',
-        // path: 'models/scroll/simple/textures/explode_content_texture.png',
-        path: 'models/scroll/simple/textures/brms_content_texture.png',
-        // path: 'models/scroll/simple/textures/drools_explanation.png',
-        // path: 'models/scroll/simple/textures/drools_tables.png',
-        // path: 'models/scroll/simple/textures/params_clp.png',
+        path: 'textures/scroll/contents/explode_content_texture.png',
     },
     // SCENE
     {

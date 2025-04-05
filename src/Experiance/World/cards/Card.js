@@ -202,7 +202,7 @@ export class Card extends EventEmitter {
     sendToFront() {
         this.centered = true;
         animateTo(this.group, {x: 0, y: 1.4, z: -10}, 9, 1, () => {
-            this.camera.shake();
+            this.camera.shake(0.05);
         });
         animateTo(this.intersectMesh, {x: 0, y: 1.4, z: -10}, 9);
     }
