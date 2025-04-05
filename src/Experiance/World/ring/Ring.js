@@ -5,7 +5,7 @@ import {rotateRingStep} from "../../Utils/Events.js";
 import EventEmitter from "../../Utils/EventEmmiter.js";
 
 export default class Ring extends EventEmitter {
-    targetRotation = 0;
+    lastHit = null;
     group = new THREE.Group();
 
     constructor(config) {
@@ -81,7 +81,7 @@ export default class Ring extends EventEmitter {
         this.world.deck.cards.forEach(card => {
             card.on('hit', () => {
                 rotateRingStep(this.innerMesh, 1, () => {
-                    console.log('card hit', card.config);
+                    this.lastHit = card.config;
                     this.trigger('hit');
                 });
                 rotateRingStep(this.innerSecondMesh, -1);

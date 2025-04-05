@@ -84,7 +84,7 @@ export class Scroll {
     watchRing() {
         this.world.ring.on('hit', () => {
             console.log('on ring hit');
-            this.show();
+            this.show(this.world.ring.lastHit);
         })
     }
 
@@ -107,30 +107,22 @@ export class Scroll {
     }
 
     hide() {
-        this.dissolveEffect?.burn(3,() => {
-            this.group.visible = false;
-        });
-
+        this.dissolveEffect?.burn(3,() => this.group.visible = false);
         this.glowEffect?.fadeOutFor(2);
-        // gsap.to(this.runes.group.scale, {x: 0, y: 0, z: 0, duration: 2, ease: 'power3.inOut'});
-        this.runes.materials.forEach(material =>
-            gsap.to(material, {opacity: 0, delay: 0.5, duration: 2, ease: 'power3.inOut'})
-        );
         gsap.to(this.stars.material, {opacity: 0, duration: 2, ease: 'power3.inOut'});
         gsap.to(this.group.scale, {x: 0, y: 0, z: 0, delay: 2, duration: 0.1, ease: 'power3.inOut'});
+        this.runes.materials
+            .forEach(material => gsap.to(material, {opacity: 0, delay: 0.5, duration: 2, ease: 'power3.inOut'}));
     }
 
-    show() {
+    show(cardConfig) {
+        console.log(cardConfig);
         this.group.visible = true;
         this.dissolveEffect?.create(3);
         this.glowEffect?.fadeIn(3);
-
-        // gsap.to(this.runes.group.scale, {x: 1, y: 1, z: 1, delay: 0.5, duration: 0.1, ease: 'power3.inOut'});
-        this.runes.materials.forEach(material => {
-            gsap.to(material, {opacity: 0.8, duration: 2, ease: 'power3.inOut'});
-        });
-
         gsap.to(this.stars.material, {opacity: 0.7, duration: 2, ease: 'power3.inOut'});
         gsap.to(this.group.scale, {...this.fullScale, duration: 2, ease: 'back.out(2.5)'});
+        this.runes.materials
+            .forEach(material => gsap.to(material, {opacity: 0.8, duration: 2, ease: 'power3.inOut'}));
     }
 }

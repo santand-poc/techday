@@ -20,7 +20,6 @@ export default class DissolveEffect {
                 }
 
                 const originalMap = child.userData.originalMaterial.map ?? null;
-                console.log({image: originalMap.image, format: originalMap.format, encoding: originalMap.encoding});
                 const shaderMaterial = createRevealFromGlowMaterial(originalMap, this.noiseMap);
                 shaderMaterial.uniforms.threshold.value = 1;
                 shaderMaterial.uniforms.time.value = 0;

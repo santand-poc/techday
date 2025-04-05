@@ -2,7 +2,7 @@ import * as THREE from "three";
 // Glow ShaderMaterial with noise (Three.js custom shader)
 const magicUniforms = {
     time: {value: 0},
-    glowColor: {value: new THREE.Color(0xffcc66)},
+    glowColor: {value: new THREE.Color(1.0, 0.2, 0.0)},
     distortionStrength: {value: 1}
 };
 
@@ -30,14 +30,14 @@ export default new THREE.ShaderMaterial({
         float curveY = cos(position.y * 10.0 + localTime) * amplitude;
     
         vec3 curved = position;
-        curved.x += curveX;
+        curved.x += curveX ;
         curved.y += curveY;
     
         // Efekt pulsowania promieni na normalnych
         curved += normal * sin(localTime * 1.5 + angle * 10.0) * amplitude * 1.5;
     
         // Rotacja wokół osi Z (własna oś UV)
-        float radius = length(position.xy);
+        float radius = 0.9 *  length(position.xy);
         float a = atan(position.y, position.x);
     
         // Dodanie wachadła + kierunku

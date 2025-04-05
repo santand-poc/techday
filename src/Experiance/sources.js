@@ -134,7 +134,7 @@ export default [
     {
         name: 'scroll',
         type: 'texture',
-        path: 'textures/scroll-background_texture.png'
+        path: 'textures/scroll/scroll-background_texture.png'
     },
     {
         name: 'starTexture',
@@ -272,7 +272,7 @@ export default [
     {
         name: 'sceneBackgroundEqui',
         type: 'texture',
-        path: 'textures/scene_background_equi.png'
+        path: 'textures/scene_background.png'
     },
     // FONTS
     {

@@ -39,7 +39,7 @@ export default function createRevealFromGlowMaterial(originalMap, noiseMap) {
                 }
             
                 float fire = texture2D(noiseMap, vUvNoise).r;
-                float burn = smoothstep(threshold - 0.2, threshold + 0.1, fire);
+                float burn = smoothstep(threshold - 0.2, threshold, fire);
             
                 vec3 flameColor = mix(glowColor, base.rgb, burn);
                 float alpha = mix(0.0, base.a, burn);

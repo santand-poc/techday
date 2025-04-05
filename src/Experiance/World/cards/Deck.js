@@ -7,7 +7,7 @@ export class Deck {
         // @formatter:off
 
         this.cards = [
-            new Card({index: 0, topTexture: 'beginning', bottomTexture: 'scroll', labelTexture: 'brmsWorldText'}),
+            new Card({index: 0, topTexture: 'beginning', bottomTexture: 'scroll', labelTexture: 'brmsWorldText', scrollContent: ''}),
             new Card({index: 1, topTexture: 'droolsIntro', bottomTexture: 'scroll', labelTexture: 'droolsIntroText'}),
             new Card({index: 2, topTexture: 'decisionTable', bottomTexture: 'scroll', labelTexture: 'droolsXlsText'}),
             new Card({index: 3, topTexture: 'cardTeamTop', bottomTexture: 'scroll', labelTexture: 'paramsAtTcfText'}),

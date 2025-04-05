@@ -7,8 +7,8 @@ export default class ScrollStars {
         this.resources = scroll.resources;
         this.time = scroll.experiance.time;
 
-        this.count = 200;
-        this.radius = 4;
+        this.count = 400;
+        this.radius = 20;
 
         this.setGeometry();
         this.setMaterial();
@@ -22,7 +22,7 @@ export default class ScrollStars {
         for (let i = 0; i < this.count; i++) {
             const angle = Math.random() * Math.PI * 2;
             const radius = this.radius * Math.random();
-            const height = Math.random() * 2 - 1;
+            const height = Math.random() * 2 - 0.5;
 
             positions[i * 3 + 0] = Math.cos(angle) * radius;
             positions[i * 3 + 1] = height;
