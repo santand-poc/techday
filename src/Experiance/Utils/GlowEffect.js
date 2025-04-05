@@ -11,10 +11,11 @@ export default class GlowEffect {
         this.easeOut = options.easeOut ?? "power3.out";
     }
 
-    fadeIn(duration) {
+    fadeIn(duration, delay) {
         gsap.killTweensOf(this.uniform);
         gsap.to(this.uniform, {
             value: this.max,
+            delay,
             duration: duration ?? this.duration,
             ease: this.easeIn
         });
@@ -29,9 +30,10 @@ export default class GlowEffect {
         });
     }
 
-    fadeOutFor(duration) {
+    fadeOutFor(duration, delay) {
         gsap.to(this.material.uniforms.glowStrength, {
             value: this.min,
+            delay,
             duration: duration ?? this.duration,
             ease: 'power2.out'
         });

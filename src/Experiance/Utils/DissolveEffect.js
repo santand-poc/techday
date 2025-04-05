@@ -50,7 +50,7 @@ export default class DissolveEffect {
                     gsap.to(child.material.uniforms.threshold, {
                         value: 0,
                         duration: duration,
-                        ease: "power2.out",
+                        ease: "power1.inOut",
                         onComplete: () => {
                             remaining--;
                             if (remaining === 0 && onComplete) {
@@ -100,7 +100,7 @@ export default class DissolveEffect {
                     gsap.to(child.material.uniforms.threshold, {
                         value: 1,
                         duration: duration,
-                        ease: "power2.inOut",
+                        ease: "power1.in",
                         onComplete: () => {
                             remaining--;
                             if (remaining === 0 && onComplete) {

@@ -111,23 +111,25 @@ export class Scroll {
     }
 
     hide() {
-        this.dissolveEffect?.burn(3,() => this.group.visible = false);
-        this.glowEffect?.fadeOutFor(2);
-        gsap.to(this.stars.material, {opacity: 0, duration: 2, ease: 'power3.inOut'});
-        gsap.to(this.group.scale, {x: 0, y: 0, z: 0, delay: 2, duration: 0.1, ease: 'power3.inOut'});
+        this.dissolveEffect?.burn(2.5,() => {
+            setTimeout(() => this.group.visible = false, 2000)
+        });
+        gsap.to(this.group.scale, {x: 0, y: 0, z: 0, delay: 5, duration: 0.5, ease: 'power1.inOut'});
+        this.glowEffect?.fadeOutFor(3, 2);
+        gsap.to(this.stars.material, {opacity: 0, duration: 5, ease: 'power1.inOut'});
         this.runes.materials
-            .forEach(material => gsap.to(material, {opacity: 0, delay: 0.5, duration: 2, ease: 'power3.inOut'}));
+            .forEach(material => gsap.to(material, {opacity: 0, duration: 5, ease: 'power1.inOut'}));
     }
 
     show(cardConfig) {
         this.resetContent(cardConfig);
         this.group.visible = true;
         this.dissolveEffect?.create(3);
-        this.glowEffect?.fadeIn(3);
-        gsap.to(this.stars.material, {opacity: 0.7, duration: 2, ease: 'power3.inOut'});
-        gsap.to(this.group.scale, {...this.fullScale, duration: 2, ease: 'back.out(2.5)'});
+        this.glowEffect?.fadeIn(1, 1.5);
+        gsap.to(this.stars.material, {opacity: 0.7, duration: 2, ease: 'power1.inOut'});
+        gsap.to(this.group.scale, {...this.fullScale, duration: 0.5, ease: 'power1.inOut'});
         this.runes.materials
-            .forEach(material => gsap.to(material, {opacity: 0.8, duration: 2, ease: 'power3.inOut'}));
+            .forEach(material => gsap.to(material, {opacity: 0.8, duration: 2, ease: 'power1.inOut'}));
     }
 
     resetContent(cardConfig) {
