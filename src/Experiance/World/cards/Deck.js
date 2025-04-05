@@ -8,9 +8,9 @@ export class Deck {
 
         this.cards = [
             new Card({index: 0, topTexture: 'beginning', bottomTexture: 'scroll', labelTexture: 'brmsWorldText'}),
-            new Card({index: 1, topTexture: 'droolsIntro', bottomTexture: 'scroll'}),
-            new Card({index: 2, topTexture: 'decisionTable', bottomTexture: 'scroll'}),
-            new Card({index: 3, topTexture: 'cardTeamTop', bottomTexture: 'scroll'}),
+            new Card({index: 1, topTexture: 'droolsIntro', bottomTexture: 'scroll', labelTexture: 'droolsIntroText'}),
+            new Card({index: 2, topTexture: 'decisionTable', bottomTexture: 'scroll', labelTexture: 'droolsXlsText'}),
+            new Card({index: 3, topTexture: 'cardTeamTop', bottomTexture: 'scroll', labelTexture: 'paramsAtTcfText'}),
             new Card({index: 4, topTexture: 'trollsTeamTop', bottomTexture: 'scroll'}),
             new Card({index: 5, topTexture: 'teamPanicTop', bottomTexture: 'scroll'}),
             new Card({index: 6, topTexture: 'refinementTop', bottomTexture: 'scroll'}),

@@ -6,7 +6,7 @@ export default function createRevealFromGlowMaterial(originalMap, noiseMap) {
             originalMap: { value: originalMap },
             noiseMap: { value: noiseMap },
             threshold: { value: 1.0 },
-            glowColor: { value: new THREE.Color('#FDD915') },
+            glowColor: { value: new THREE.Color(1.0, 0.2, 0.0) },
             time: { value: 0 }
         },
         vertexShader: `
@@ -16,7 +16,7 @@ export default function createRevealFromGlowMaterial(originalMap, noiseMap) {
             
             void main() {
                 vUvBase = uv;
-                vUvNoise = uv + vec2(time * 0.1, time * -0.05); // tylko maska ognia się przesuwa
+                vUvNoise = uv + vec2(time * 0.1, time * -0.05);
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
             }
         `,
@@ -48,6 +48,7 @@ export default function createRevealFromGlowMaterial(originalMap, noiseMap) {
             }
         `,
         transparent: true,
-        depthWrite: false
+        depthWrite: false,
+        toneMapped: false
     });
 }

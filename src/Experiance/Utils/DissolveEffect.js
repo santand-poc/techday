@@ -2,16 +2,14 @@ import gsap from 'gsap';
 import createRevealFromGlowMaterial from './createRevealFromGlowMaterial';
 
 export default class DissolveEffect {
-    constructor(meshes, noiseMap, duration = 1.5) {
+    constructor(meshes, noiseMap) {
         this.meshes = meshes;
         this.noiseMap = noiseMap;
-        this.duration = duration;
         this.applied = false;
     }
 
     apply() {
         if (this.applied) return;
-
         this.meshes.forEach(mesh => {
             mesh.traverse(child => {
                 if (!child.material || !child.isMesh) return;
@@ -22,6 +20,7 @@ export default class DissolveEffect {
                 }
 
                 const originalMap = child.userData.originalMaterial.map ?? null;
+                console.log({image: originalMap.image, format: originalMap.format, encoding: originalMap.encoding});
                 const shaderMaterial = createRevealFromGlowMaterial(originalMap, this.noiseMap);
                 shaderMaterial.uniforms.threshold.value = 1;
                 shaderMaterial.uniforms.time.value = 0;
@@ -35,36 +34,11 @@ export default class DissolveEffect {
         this.applied = true;
     }
 
-    start(onComplete) {
+
+
+    create(duration, onComplete) {
         this.apply();
-
-        let remaining = 0;
-
-        this.meshes.forEach(mesh => {
-            mesh.traverse(child => {
-                if (child.material?.uniforms?.threshold !== undefined) {
-                    child.visible = true;
-                    remaining++;
-
-                    gsap.to(child.material.uniforms.threshold, {
-                        value: 1,
-                        duration: this.duration,
-                        ease: "power2.inOut",
-                        onComplete: () => {
-                            remaining--;
-                            if (remaining === 0 && onComplete) {
-                                onComplete();
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-    restore(onComplete) {
-        this.apply();
-        this.animateTime(this.duration);
+        this.animateTime(duration);
 
         let remaining = 0;
 
@@ -76,7 +50,7 @@ export default class DissolveEffect {
 
                     gsap.to(child.material.uniforms.threshold, {
                         value: 0,
-                        duration: this.duration,
+                        duration: duration,
                         ease: "power2.out",
                         onComplete: () => {
                             remaining--;
@@ -111,5 +85,32 @@ export default class DissolveEffect {
         };
 
         tick();
+    }
+
+    burn(duration, onComplete) {
+        this.apply();
+
+        let remaining = 0;
+
+        this.meshes.forEach(mesh => {
+            mesh.traverse(child => {
+                if (child.material?.uniforms?.threshold !== undefined) {
+                    child.visible = true;
+                    remaining++;
+
+                    gsap.to(child.material.uniforms.threshold, {
+                        value: 1,
+                        duration: duration,
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                            remaining--;
+                            if (remaining === 0 && onComplete) {
+                                onComplete();
+                            }
+                        }
+                    });
+                }
+            });
+        });
     }
 }

@@ -8,7 +8,7 @@ export default class ScrollStars {
         this.time = scroll.experiance.time;
 
         this.count = 200;
-        this.radius = 2;
+        this.radius = 4;
 
         this.setGeometry();
         this.setMaterial();

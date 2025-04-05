@@ -45,7 +45,7 @@ export default class World {
             // this.directionalHelper = new THREE.DirectionalLightHelper(this.directional);
             // this.scene.add(this.directionalHelper);
 
-            let ambientLight = new THREE.AmbientLight('white', 5);
+            let ambientLight = new THREE.AmbientLight('white', 4);
             this.scene.add(ambientLight);
 
 

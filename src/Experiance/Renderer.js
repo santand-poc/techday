@@ -13,6 +13,7 @@ export default class Renderer {
         this.camera = this.experiance.camera
         this.time = this.experiance.time
         this.setInstance();
+        this.setComposer();
     }
 
     setInstance() {
@@ -27,19 +28,30 @@ export default class Renderer {
         this.instance.toneMappingExposure = 1
         this.instance.gammaFactor = 2.2
         this.instance.outputColorSpace = THREE.SRGBColorSpace
-        this.instance.shadowMap.enabled = true
-        this.instance.shadowMap.type = THREE.PCFSoftShadowMap
+        // this.instance.shadowMap.enabled = true
+        // this.instance.shadowMap.type = THREE.PCFSoftShadowMap
 
+    }
+
+    setComposer() {
+        this.composer = new EffectComposer(this.instance);
+
+        const renderPass = new RenderPass(this.scene, this.camera.instance);
+        renderPass.overrideMaterial = null;
+        this.composer.addPass(renderPass);
+
+        const outputPass = new OutputPass();
+        this.composer.addPass(outputPass);
     }
 
     update() {
-
-        this.instance.render(this.scene, this.camera.instance);
+        this.composer.render();
     }
 
     resize() {
-        this.instance.setSize(this.sizes.width, this.sizes.height)
-        this.instance.setPixelRatio(this.sizes.pixelRatio)
+        this.instance.setSize(this.sizes.width, this.sizes.height);
+        this.instance.setPixelRatio(this.sizes.pixelRatio);
+        this.composer.setSize(this.sizes.width, this.sizes.height);
     }
 
 }

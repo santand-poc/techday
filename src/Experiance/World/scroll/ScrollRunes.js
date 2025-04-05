@@ -6,6 +6,7 @@ export default class ScrollRunes {
         this.scene = scroll.scene;
         this.time = scroll.experiance.time;
         this.resources = scroll.resources;
+        this.materials = [];
 
         this.count = 30;
 
@@ -37,6 +38,8 @@ export default class ScrollRunes {
                 blending: THREE.AdditiveBlending,
                 color: 0xffcc88
             });
+
+            this.materials.push(material);
 
             const sprite = new THREE.Sprite(material);
 

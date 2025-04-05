@@ -11,43 +11,28 @@ export default class GlowEffect {
         this.easeOut = options.easeOut ?? "power3.out";
     }
 
-    fadeIn() {
+    fadeIn(duration) {
         gsap.killTweensOf(this.uniform);
         gsap.to(this.uniform, {
             value: this.max,
-            duration: this.duration,
+            duration: duration ?? this.duration,
             ease: this.easeIn
         });
     }
 
-    fadeOut() {
+    fadeOut(duration) {
         gsap.killTweensOf(this.uniform);
         gsap.to(this.uniform, {
             value: this.min,
-            duration: this.duration,
+            duration: duration ?? this.duration,
             ease: this.easeOut
         });
     }
 
-    pulse(scale = 2.5, duration = 0.6) {
-        gsap.killTweensOf(this.uniform);
-        gsap.to(this.uniform, {
-            value: scale,
-            duration: duration * 0.5,
-            ease: "power3.out",
-            yoyo: true,
-            repeat: 1
-        });
-    }
-
-    set(value) {
-        this.uniform.value = value;
-    }
-
-    fadeTo(targetValue = 1.0) {
+    fadeOutFor(duration) {
         gsap.to(this.material.uniforms.glowStrength, {
-            value: targetValue,
-            duration: this.duration,
+            value: this.min,
+            duration: duration ?? this.duration,
             ease: 'power2.out'
         });
     }

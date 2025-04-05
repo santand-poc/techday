@@ -138,7 +138,7 @@ export class Card extends EventEmitter {
             easeOut: "sine.inOut"
         });
         this.glowEffect = new GlowEffect(this.glowMaterial, {
-            max: 1.0,
+            max: 0.4,
             min: 0.0,
             duration: 0.4
         });

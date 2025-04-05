@@ -175,7 +175,22 @@ export default [
     {
         name: 'brmsWorldText',
         type: 'texture',
-        path: 'textures/texts/brms-world_texture.png'
+        path: 'textures/texts/brms-world_texture_gold.png'
+    },
+    {
+        name: 'droolsIntroText',
+        type: 'texture',
+        path: 'textures/texts/drools_intro.png'
+    },
+    {
+        name: 'droolsXlsText',
+        type: 'texture',
+        path: 'textures/texts/drools_xls.png'
+    },
+    {
+        name: 'paramsAtTcfText',
+        type: 'texture',
+        path: 'textures/texts/params_at_tcf.png'
     },
     {
         name: 'magicGlowTexture',
@@ -229,19 +244,24 @@ export default [
         path: 'textures/ring/blast_texture.png'
     },
     // SCROLL
+    // {
+    //     name: 'simpleScroll',
+    //     type: 'gltfModel',
+    //     path: 'models/scroll/simple/scene.gltf'
+    // },
     {
-        name: 'simpleScroll',
-        type: 'gltfModel',
-        path: 'models/scroll/simple/scene.gltf'
+        name: 'scrollTexture',
+        type: 'texture',
+        path: 'textures/scroll_transparent_old.png'
     },
     {
         name: 'explodeScrollContent',
         type: 'texture',
         // path: 'models/scroll/simple/textures/explode_content_texture.png',
-        // path: 'models/scroll/simple/textures/brms_content_texture.png',
+        path: 'models/scroll/simple/textures/brms_content_texture.png',
         // path: 'models/scroll/simple/textures/drools_explanation.png',
         // path: 'models/scroll/simple/textures/drools_tables.png',
-        path: 'models/scroll/simple/textures/params_clp.png',
+        // path: 'models/scroll/simple/textures/params_clp.png',
     },
     // SCENE
     {
