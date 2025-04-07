@@ -193,6 +193,57 @@ export default [
         path: 'textures/cards/texts/params_at_tcf.png'
     },
     {
+        name: 'droolsXls2Text',
+        type: 'texture',
+        path: 'textures/cards/texts/drools_xls2.png'
+    },
+    {
+        name: 'dziedziczenieXlsText',
+        type: 'texture',
+        path: 'textures/cards/texts/dziedziczenie.png'
+    },
+    {
+        name: 'epilogText',
+        type: 'texture',
+        path: 'textures/cards/texts/epilog.png'
+    },
+    {
+        name: 'javaDrlText',
+        type: 'texture',
+        path: 'textures/cards/texts/java_drl.png'
+    },
+    {
+        name: 'lepszePytaniaText',
+        type: 'texture',
+        path: 'textures/cards/texts/lepsze_pytania.png'
+    },
+    {
+        name: 'lepszyModelText',
+        type: 'texture',
+        path: 'textures/cards/texts/lepszy_model.png'
+    },
+    {
+        name: 'poskromicText',
+        type: 'texture',
+        path: 'textures/cards/texts/poskromic.png'
+    },
+    {
+        name: 'przyszłoscText',
+        type: 'texture',
+        path: 'textures/cards/texts/przyszłosc.png'
+    },
+    {
+        name: 'pytaniaText',
+        type: 'texture',
+        path: 'textures/cards/texts/pytania.png'
+    },
+    {
+        name: 'wyborText',
+        type: 'texture',
+        path: 'textures/cards/texts/wybor.png'
+    },
+    ///
+    {
         name: 'magicGlowTexture',
         type: 'texture',
         path: 'textures/ball/gold_glow_outward.png'
@@ -243,12 +294,6 @@ export default [
         type: 'texture',
         path: 'textures/ring/blast_texture.png'
     },
-    // SCROLL
-    // {
-    //     name: 'simpleScroll',
-    //     type: 'gltfModel',
-    //     path: 'models/scroll/simple/scene.gltf'
-    // },
     {
         name: 'scrollTexture',
         type: 'texture',
@@ -278,6 +323,31 @@ export default [
         name: 'explodeScrollContent',
         type: 'texture',
         path: 'textures/scroll/contents/explode_content_texture.png',
+    },
+    {
+        name: 'pyramidScrollContent',
+        type: 'texture',
+        path: 'textures/scroll/contents/pyramid.png',
+    },
+    {
+        name: 'ritualScrollContent',
+        type: 'texture',
+        path: 'textures/scroll/contents/ritual.png',
+    },
+    {
+        name: 'mechanismScrollContent',
+        type: 'texture',
+        path: 'textures/scroll/contents/mechanism.png',
+    },
+    {
+        name: 'mechanism2ScrollContent',
+        type: 'texture',
+        path: 'textures/scroll/contents/mechan2.png',
+    },
+    {
+        name: 'twierdzaScrollContent',
+        type: 'texture',
+        path: 'textures/scroll/contents/twierdza.png',
     },
     // SCENE
     {

@@ -8,17 +8,17 @@ export class Deck {
 
         this.cards = [
             new Card({index: 0, topTexture: 'beginning', bottomTexture: 'scroll', labelTexture: 'brmsWorldText', scrollContent: 'brmsScrollContent'}),
-            new Card({index: 1, topTexture: 'droolsIntro', bottomTexture: 'scroll', labelTexture: 'droolsIntroText', scrollContent: 'droolsExplanationScrollContent'}),
-            new Card({index: 2, topTexture: 'decisionTable', bottomTexture: 'scroll', labelTexture: 'droolsXlsText', scrollContent: 'droolsXlsScrollContent'}),
-            new Card({index: 3, topTexture: 'cardTeamTop', bottomTexture: 'scroll', labelTexture: 'paramsAtTcfText', scrollContent: 'paramsInClpScrollContent'}),
-            new Card({index: 4, topTexture: 'trollsTeamTop', bottomTexture: 'scroll', scrollContent: 'explodeScrollContent'}),
-            new Card({index: 5, topTexture: 'teamPanicTop', bottomTexture: 'scroll'}),
-            new Card({index: 6, topTexture: 'refinementTop', bottomTexture: 'scroll'}),
-            new Card({index: 7, topTexture: 'lambdaResque', bottomTexture: 'scroll'}),
-            new Card({index: 8, topTexture: 'finalTable', bottomTexture: 'scroll'}),
-            new Card({index: 9, topTexture: 'payment', bottomTexture: 'scroll'}),
-            new Card({index: 10, coverTexture: 'fullCardVertical', topTexture: 'scroll', horizontalScale: true, topGeometryFull: true}),
-            new Card({index: 11, coverTexture: 'fullCardHorizontal', topTexture: 'scroll', horizontalScale: true, topGeometryFull: true}),
+            new Card({index: 1, topTexture: 'droolsIntro', bottomTexture: 'scroll', labelTexture: 'poskromicText', scrollContent: 'droolsExplanationScrollContent'}),
+            new Card({index: 2, topTexture: 'decisionTable', bottomTexture: 'scroll', labelTexture: 'wyborText', scrollContent: 'droolsXlsScrollContent'}),
+            new Card({index: 3, topTexture: 'cardTeamTop', bottomTexture: 'scroll', labelTexture: 'lepszePytaniaText', scrollContent: 'paramsInClpScrollContent'}),
+            new Card({index: 4, topTexture: 'trollsTeamTop', bottomTexture: 'scroll', labelTexture: 'javaDrlText', scrollContent: 'explodeScrollContent'}),
+            new Card({index: 5, topTexture: 'teamPanicTop', bottomTexture: 'scroll', labelTexture: 'droolsXlsText', scrollContent: 'pyramidScrollContent'}),
+            new Card({index: 6, topTexture: 'refinementTop', bottomTexture: 'scroll', labelTexture: 'dziedziczenieXlsText', scrollContent: 'ritualScrollContent'}),
+            new Card({index: 7, topTexture: 'lambdaResque', bottomTexture: 'scroll', labelTexture: 'lepszyModelText', scrollContent: 'mechanismScrollContent'}),
+            new Card({index: 8, topTexture: 'finalTable', bottomTexture: 'scroll', labelTexture: 'przyszłoscText', scrollContent: 'twierdzaScrollContent'}),
+            new Card({index: 9, topTexture: 'payment', bottomTexture: 'scroll', labelTexture: 'epilogText', scrollContent: 'mechanism2ScrollContent'}),
+            new Card({index: 10, coverTexture: 'fullCardVertical', topTexture: 'scroll', labelTexture: 'pytaniaText', horizontalScale: true, topGeometryFull: true}),
+            new Card({index: 11, coverTexture: 'fullCardHorizontal', topTexture: 'scroll', labelTexture: 'lepszePytaniaText', horizontalScale: true, topGeometryFull: true}),
         ];
 
         // @formatter:on
