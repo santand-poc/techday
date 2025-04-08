@@ -23,8 +23,8 @@ export default class Ring extends EventEmitter {
     }
 
     setGeometry() {
-        this.geometry = new THREE.RingGeometry(5, 85, 64, 1);
-        this.innerGeometry = new THREE.RingGeometry(5, 85, 64, 1);
+        this.geometry = new THREE.RingGeometry(5, 75, 64, 1);
+        this.innerGeometry = new THREE.RingGeometry(5, 75, 64, 1);
     }
 
     setMaterial() {
@@ -70,7 +70,7 @@ export default class Ring extends EventEmitter {
         this.innerSecondMesh.position.z += 0.15;
         this.group.add(this.innerSecondMesh);
 
-        this.slots = createRingSlots(63.5, 12, this);
+        this.slots = createRingSlots(55.5, 12, this);
         this.slots.forEach(slot => this.group.add(slot));
 
         this.group.position.z = -65;

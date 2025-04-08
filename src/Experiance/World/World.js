@@ -6,6 +6,7 @@ import MagicBall from "./ball/MagicBall.js";
 import Ring from "./ring/Ring.js";
 import {Scroll} from "./scroll/Scroll.js";
 import {Deck} from "./cards/Deck.js";
+import {Frame} from "./belts/Frame.js";
 
 export default class World {
 
@@ -26,6 +27,8 @@ export default class World {
             this.ring = new Ring();
 
             this.scroll = new Scroll();
+
+            this.frame = new Frame();
 
             this.spot = new THREE.SpotLight(0xffe7b0, 50, 5, Math.PI / 3);
             this.spot.position.set(0, 0, 3);
@@ -58,12 +61,6 @@ export default class World {
         this.ring?.update();
         this.scroll?.update();
         this.deck?.update();
-        // this.angle += 0.05;
-        // const radius = 4;
-        // if (this.directional) {
-        //     this.directional.position.x = Math.sin(this.angle) * radius;
-        //     this.directional.position.z = Math.cos(this.angle) * radius;
-        //     this.directional.lookAt(0, 0, 0)
-        // }
+        this.frame?.update();
     }
 }

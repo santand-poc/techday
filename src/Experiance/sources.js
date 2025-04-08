@@ -349,6 +349,12 @@ export default [
         type: 'texture',
         path: 'textures/scroll/contents/twierdza.png',
     },
+    // FRAME
+    {
+        name: 'backgroundFrame',
+        type: 'texture',
+        path: 'textures/belts/background_frame.png',
+    },
     // SCENE
     {
         name: 'sceneBackground',

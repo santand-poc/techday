@@ -15,7 +15,7 @@ export default class MagicBall {
     }
 
     setGeometry() {
-        this.geometry = new THREE.SphereGeometry(10, 64, 64); // średnica 1 jednostka
+        this.geometry = new THREE.SphereGeometry(9.3, 64, 64); // średnica 1 jednostka
     }
 
     setMaterial() {

@@ -7,14 +7,18 @@ import {gsap} from "gsap";
 import createGlowMaterial from "../../Utils/glowMaterial.js";
 import DissolveEffect from '../../Utils/DissolveEffect.js';
 import GlowEffect from "../../Utils/GlowEffect.js";
+import EventEmitter from "../../Utils/EventEmmiter.js";
 
-export class Scroll {
+export class Scroll  extends EventEmitter {
+    static ScrollShowStart = 'ScrollShowStart'
+    static ScrollHideStart = 'ScrollHideStart'
     fullScale = {x: 5, y: 5, z: 0.2}
 
 
     group = new THREE.Group();
 
     constructor() {
+        super();
         this.experiance = Experience.INSTANCE;
         this.scene = this.experiance.scene;
         this.resources = this.experiance.resources;
@@ -111,17 +115,19 @@ export class Scroll {
     }
 
     hide() {
+        this.trigger(Scroll.ScrollHideStart);
         this.dissolveEffect?.burn(2.5,() => {
-            setTimeout(() => this.group.visible = false, 2000)
+            setTimeout(() => this.group.visible = false, 1000);
         });
-        gsap.to(this.group.scale, {x: 0, y: 0, z: 0, delay: 5, duration: 0.5, ease: 'power1.inOut'});
+        gsap.to(this.group.scale, {x: 0, y: 0, z: 0, delay: 4, duration: 0.5, ease: 'power1.inOut'});
         this.glowEffect?.fadeOutFor(3, 2);
-        gsap.to(this.stars.material, {opacity: 0, duration: 5, ease: 'power1.inOut'});
+        gsap.to(this.stars.material, {opacity: 0, duration: 4, ease: 'power1.inOut'});
         this.runes.materials
-            .forEach(material => gsap.to(material, {opacity: 0, duration: 5, ease: 'power1.inOut'}));
+            .forEach(material => gsap.to(material, {opacity: 0, duration: 4, ease: 'power1.inOut'}));
     }
 
     show(cardConfig) {
+        this.trigger(Scroll.ScrollShowStart);
         this.resetContent(cardConfig);
         this.group.visible = true;
         this.dissolveEffect?.create(3);

@@ -33,7 +33,7 @@ export class Card extends EventEmitter {
     }
 
     setGeometry() {
-        const topGeometryHeight = this.config.topGeometryFull ? 1.92 : 1.08;
+        const topGeometryHeight = this.config.topGeometryFull ? 1.92 : 1.3;
         this.geometry = new RoundedBoxGeometry(1.08, 1.92, 0.04, 2, 0.05);
         this.topPlaneGrometry = new THREE.PlaneGeometry(1.08, topGeometryHeight);
         this.bottomPlaneGrometry = new THREE.PlaneGeometry(1.08, 0.6);
@@ -82,7 +82,7 @@ export class Card extends EventEmitter {
                 this.topPlaneGrometry,
                 this.materials.innerTop
             );
-            this.topPlane.position.y = topGeometryFull ? 0 : 0.35;
+            this.topPlane.position.y = topGeometryFull ? 0 : 0.28;
             this.topPlane.position.z = -0.02;
             this.group.add(this.topPlane);
         }
@@ -93,13 +93,14 @@ export class Card extends EventEmitter {
                 this.materials.innerBottom
             );
             this.bottomPlane.position.y = -0.6;
+            this.bottomPlane.position.z = -0.03;
             this.group.add(this.bottomPlane);
         }
 
         if (labelTexture) {
             this.labelText = new PlaneLabel({texture: labelTexture}).mesh;
-            this.labelText.position.z = 0.026;
-            this.labelText.position.y = -0.26;
+            this.labelText.position.z = 0.021;
+            this.labelText.position.y = -0.47;
             this.group.add(this.labelText);
         }
 
@@ -108,6 +109,7 @@ export class Card extends EventEmitter {
             new THREE.PlaneGeometry(1.5, 2.4),
             this.glowMaterial
         );
+        this.group.position.z = -0.5;
         this.group.add(this.glow);
 
         this.camera.instance.add(this.group);
