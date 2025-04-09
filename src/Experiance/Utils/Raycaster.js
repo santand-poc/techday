@@ -19,6 +19,12 @@ export default class Raycaster extends EventEmitter {
         if (this.experience.world?.scroll?.mesh) {
             objects.push(this.experience.world.scroll.mesh);
         }
+        if (this.experience.world?.gate?.leftDoor) {
+            objects.push(this.experience.world?.gate?.leftDoor);
+        }
+        if (this.experience.world?.gate?.rightDoor) {
+            objects.push(this.experience.world?.gate?.rightDoor);
+        }
         this.intersections = this.instance.intersectObjects(objects);
     }
 

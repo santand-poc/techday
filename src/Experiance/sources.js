@@ -349,6 +349,47 @@ export default [
         type: 'texture',
         path: 'textures/scroll/contents/twierdza.png',
     },
+    // GATE
+    {
+        name: 'gateLeft',
+        type: 'texture',
+        path: 'textures/gate/gate_left.png',
+    },
+    {
+        name: 'gateLeftRoughness',
+        type: 'texture',
+        path: 'textures/gate/gate_left_roughness.png',
+    },
+    {
+        name: 'gateLeftDisplacement',
+        type: 'texture',
+        path: 'textures/gate/gate_left_displacement.png',
+    },
+    {
+        name: 'gateLeftNormal',
+        type: 'texture',
+        path: 'textures/gate/gate_left_normal.png',
+    },
+    {
+        name: 'gateRight',
+        type: 'texture',
+        path: 'textures/gate/gate_right.png',
+    },
+    {
+        name: 'gateRightRoughness',
+        type: 'texture',
+        path: 'textures/gate/gate_right_roughness.png',
+    },
+    {
+        name: 'gateRightDisplacement',
+        type: 'texture',
+        path: 'textures/gate/gate_right_displacement.png',
+    },
+    {
+        name: 'gateRightNormal',
+        type: 'texture',
+        path: 'textures/gate/gate_right_normal.png',
+    },
     // FRAME
     {
         name: 'backgroundFrame',
