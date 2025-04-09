@@ -48,6 +48,15 @@ export function animateCardToSlot(card, slot, duration = 1, onComplete = () => {
         card.quaternion.copy(startQuat.clone().slerp(endQuat, t));
         card.scale.lerpVectors(startScale, endScale, easedT);
 
+        const easedAngleT = Easings.easeInQuad(t);
+        // DODANE: dodatkowy obrót wokół osi Y o 360°
+        const spinAngle = easedAngleT * -Math.PI * 2; // pełne 360°
+        const spinQuat = new THREE.Quaternion().setFromAxisAngle(
+            new THREE.Vector3(0, 1, 0),
+            spinAngle
+        );
+        card.quaternion.multiply(spinQuat); // dodaj obrót spinujący
+
         if (t < 1) {
             requestAnimationFrame(animate);
         } else {

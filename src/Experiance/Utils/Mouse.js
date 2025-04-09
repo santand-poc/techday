@@ -16,6 +16,9 @@ export default class Mouse extends EventEmitter {
     static H_UP_EVENT = 'h_up'
     static G_UP_EVENT = 'g_up'
     static F_UP_EVENT = 'f_up'
+    static S_UP_EVENT = 's_up'
+    static NUMBER_UP_EVENT = 'number_up'
+    lastNumberClicked = undefined;
 
     constructor() {
         super();
@@ -74,7 +77,17 @@ export default class Mouse extends EventEmitter {
             if(e.code === 'KeyF') {
                 this.trigger(Mouse.F_UP_EVENT)
             }
-        })
+            if(e.code === 'KeyS') {
+                this.trigger(Mouse.S_UP_EVENT)
+            }
+        });
+        window.addEventListener('keyup', (e) => {
+            console.log(e)
+            if (e.key >= '0' && e.key <= '9') {
+                this.lastNumberClicked = +e.key;
+                this.trigger(Mouse.NUMBER_UP_EVENT);
+            }
+        });
     }
 
     watchRightClick() {

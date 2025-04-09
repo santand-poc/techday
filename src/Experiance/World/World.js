@@ -8,6 +8,7 @@ import {Scroll} from "./scroll/Scroll.js";
 import {Deck} from "./cards/Deck.js";
 import {Frame} from "./belts/Frame.js";
 import {Gate} from "./gate/Gate.js";
+import {InteriorGlow} from "./interior/InteriorGlow.js";
 
 export default class World {
 
@@ -21,17 +22,19 @@ export default class World {
         this.resources.on(Resources.READY_EVENT, () => {
             console.info('Resources ready');
 
-           this.gate = new Gate();
+            this.gate = new Gate();
 
-           this.frame = new Frame();
-
-           this.deck = new Deck();
+            this.deck = new Deck();
 
             this.magicBall = new MagicBall();
 
             this.ring = new Ring();
 
             this.scroll = new Scroll();
+
+            this.interiorGlow = new InteriorGlow();
+
+            this.frame = new Frame();
 
             // this.spot = new THREE.SpotLight(0xffe7b0, 50, 5, Math.PI / 3);
             // this.spot.position.set(0, 0, 3);
@@ -103,5 +106,6 @@ export default class World {
         this.deck?.update();
         this.frame?.update();
         this.gate?.update();
+        this.interiorGlow?.update();
     }
 }

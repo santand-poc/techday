@@ -11,13 +11,14 @@ export default class GlowEffect {
         this.easeOut = options.easeOut ?? "power3.out";
     }
 
-    fadeIn(duration, delay) {
+    fadeIn(duration, delay, onComplete = () => {}) {
         gsap.killTweensOf(this.uniform);
         gsap.to(this.uniform, {
             value: this.max,
             delay,
             duration: duration ?? this.duration,
-            ease: this.easeIn
+            ease: this.easeIn,
+            onComplete
         });
     }
 

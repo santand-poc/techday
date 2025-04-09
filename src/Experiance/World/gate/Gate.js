@@ -36,7 +36,7 @@ export class Gate extends EventEmitter {
     setGeometry() {
         // Połowa szerokości drzwi
         this.doorWidth = 0.5;
-        this.geometry = new RoundedBoxGeometry(this.doorWidth, 1.03, 0.01, 2, 0.05);
+        this.geometry = new RoundedBoxGeometry(this.doorWidth, 1.03, 0.001, 2, 0.05);
     }
 
     setMaterial() {
@@ -69,7 +69,7 @@ export class Gate extends EventEmitter {
         this.leftDoorGroup.add(this.leftDoor);
 
         this.rightDoor = new THREE.Mesh(this.geometry, this.rightMaterial);
-        this.rightDoorGroup =  new THREE.Group();
+        this.rightDoorGroup = new THREE.Group();
         this.rightDoorGroup.add(this.rightDoor);
 
         // Pivoty
@@ -121,11 +121,14 @@ export class Gate extends EventEmitter {
 
     setInteraction() {
         this.mouse.on(Mouse.LEFT_ClICK_EVENT, () => {
-            console.log('isHover', this.isHover());
-            if (this.isHover()) {
+            if (this.doorGroup.visible && this.isHover()) {
                 this.isOpen = !this.isOpen;
                 this.toggleDoor();
             }
+        });
+        this.mouse.on(Mouse.O_UP_EVENT, () => {
+            this.isOpen = !this.isOpen;
+            this.toggleDoor();
         });
     }
 
@@ -154,7 +157,10 @@ export class Gate extends EventEmitter {
         gsap.to(this.leftPivot.rotation, {
             y: Math.PI / 2,
             duration: 1,
-            ease: "power1.inOut"
+            ease: "power1.inOut",
+            onComplete: () => {
+                this.doorGroup.visible = false;
+            }
         });
 
         gsap.to(this.rightPivot.rotation, {
@@ -166,6 +172,7 @@ export class Gate extends EventEmitter {
 
     closeDoor() {
         this.isOpen = false;
+        this.doorGroup.visible = true;
         this.trigger(Gate.GateCloseStart);
 
         gsap.to(this.leftPivot.rotation, {

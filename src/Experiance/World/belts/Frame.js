@@ -55,10 +55,13 @@ export class Frame {
         this.sizes?.on(Sizes.RESIZE_EVENT, () => {
             this.resize();
         });
+        console.log(this.world.scroll?.on)
         this.world.scroll?.on(Scroll.ScrollShowStart, () => {
+            console.log(Scroll.ScrollShowStart);
             gsap.to(this.mesh.material, {opacity: 0, duration: 1, ease: 'power1.inOut'});
         })
         this.world.scroll?.on(Scroll.ScrollHideStart, () => {
+            console.log(Scroll.ScrollHideStart);
             gsap.to(this.mesh.material, {opacity: 1, duration: 4, ease: 'power1.inOut'});
         })
     }

@@ -167,6 +167,11 @@ export class Card extends EventEmitter {
                 this.onClicked();
             }
         })
+        this.mouse.on(Mouse.NUMBER_UP_EVENT, () => {
+            if(this.config.index === this.mouse.lastNumberClicked) {
+                this.onClicked();
+            }
+        })
     }
 
     isHovered() {
