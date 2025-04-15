@@ -23,7 +23,7 @@ export default class Camera {
 
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.webglCanvas);
-        // this.controls.enableRotate = false;
+        this.controls.enableRotate = false;
         this.controls.enablePan = false;
     }
 

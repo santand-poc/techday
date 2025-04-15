@@ -6,7 +6,7 @@ import MagicBall from "./ball/MagicBall.js";
 import Ring from "./ring/Ring.js";
 import {Scroll} from "./scroll/Scroll.js";
 import {Deck} from "./cards/Deck.js";
-import {Frame} from "./belts/Frame.js";
+import {Frame} from "./frame/Frame.js";
 import {Gate} from "./gate/Gate.js";
 import {InteriorGlow} from "./interior/InteriorGlow.js";
 
